@@ -43,6 +43,18 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
+    "linux": {
+      "targets": ["deb", "appimage", "rpm"],
+      "rpm": {
+        "packageName": "cc-switch",
+        "dependencies": [
+          "webkit2gtk4.1",
+          "openssl-libs",
+          "libappindicator-gtk3"
+        ],
+        "release": "1"
+      }
+    },
     "windows": {
       "wix": {
         "template": "wix/per-user-main.wxs"
