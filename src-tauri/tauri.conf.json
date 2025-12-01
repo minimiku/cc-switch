@@ -1,54 +1,15 @@
 {
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "CC Switch",
+  "version": "3.8.1",
+  "identifier": "com.ccswitch.desktop",
   "build": {
-    "beforeBuildCommand": "pnpm run build:renderer",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:3000",
     "beforeDevCommand": "pnpm run dev:renderer",
-    "devPath": "http://localhost:3000",
-    "distDir": "../dist"
+    "beforeBuildCommand": "pnpm run build:renderer"
   },
-  "package": {
-    "productName": "CC Switch",
-    "version": "3.8.1"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "identifier": "com.ccswitch.desktop",
-      "targets": ["deb", "appimage", "rpm"],
-      "createUpdaterArtifacts": false,
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "linux": {
-        "deb": {
-          "files": {}
-        }
-      },
-      "windows": {
-        "wix": {
-          "template": "wix/per-user-main.wxs"
-        }
-      },
-      "macOS": {
-        "minimumSystemVersion": "10.15"
-      }
-    },
-    "security": {
-      "csp": "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost https: http:",
-      "assetProtocol": {
-        "scope": ["**"]
-      }
-    },
+  "app": {
     "windows": [
       {
         "label": "main",
@@ -61,6 +22,39 @@
         "fullscreen": false,
         "center": true
       }
-    ]
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost https: http:",
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["**"]
+      }
+    }
+  },
+  "bundle": {
+    "active": true,
+    "createUpdaterArtifacts": false,
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "wix": {
+        "template": "wix/per-user-main.wxs"
+      }
+    },
+    "macOS": {
+      "minimumSystemVersion": "10.15"
+    }
+  },
+  "plugins": {
+    "deep-link": {
+      "desktop": {
+        "schemes": ["ccswitch"]
+      }
+    }
   }
 }
