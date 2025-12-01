@@ -1,20 +1,58 @@
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "CC Switch",
-  "version": "3.8.1",
-  "identifier": "com.ccswitch.desktop",
   "build": {
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:3000",
+    "beforeBuildCommand": "pnpm run build:renderer",
     "beforeDevCommand": "pnpm run dev:renderer",
-    "beforeBuildCommand": "pnpm run build:renderer"
+    "devPath": "http://localhost:3000",
+    "distDir": "../dist"
   },
-  "app": {
+  "package": {
+    "productName": "CC Switch",
+    "version": "3.8.1"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "targets": ["deb", "appimage", "rpm"],
+      "createUpdaterArtifacts": false,
+      "identifier": "com.ccswitch.desktop",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "linux": {
+        "deb": {
+          "files": {}
+        }
+      },
+      "windows": {
+        "wix": {
+          "template": "wix/per-user-main.wxs"
+        }
+      },
+      "macOS": {
+        "minimumSystemVersion": "10.15"
+      }
+    },
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost https: http:",
+      "assetProtocol": {
+        "scope": ["**"]
+      }
+    },
     "windows": [
       {
         "label": "main",
-        "title": "",
-        "titleBarStyle": "Overlay",
+        "title": "CC Switch",
         "width": 1000,
         "height": 650,
         "minWidth": 900,
@@ -23,58 +61,6 @@
         "fullscreen": false,
         "center": true
       }
-    ],
-    "security": {
-      "csp": "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' ipc: http://ipc.localhost https: http:",
-      "assetProtocol": {
-        "enable": true,
-        "scope": []
-      }
-    }
-  },
-  "bundle": {
-    "active": true,
-    "targets": "all",
-    "createUpdaterArtifacts": true,
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ],
-    "linux": {
-      "targets": ["deb", "appimage", "rpm"],
-      "rpm": {
-        "packageName": "cc-switch",
-        "dependencies": [
-          "webkit2gtk4.1",
-          "openssl-libs",
-          "libappindicator-gtk3"
-        ],
-        "release": "1"
-      }
-    },
-    "windows": {
-      "wix": {
-        "template": "wix/per-user-main.wxs"
-      }
-    },
-    "macOS": {
-      "minimumSystemVersion": "10.15"
-    }
-  },
-  "plugins": {
-    "deep-link": {
-      "desktop": {
-        "schemes": ["ccswitch"]
-      }
-    },
-    "updater": {
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEM4MDI4QzlBNTczOTI4RTMKUldUaktEbFhtb3dDeUM5US9kT0FmdGR5Ti9vQzcwa2dTMlpibDVDUmQ2M0VGTzVOWnd0SGpFVlEK",
-      "endpoints": [
-        "https://github.com/farion1231/cc-switch/releases/latest/download/latest.json"
-      ]
-    }
+    ]
   }
 }
