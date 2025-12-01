@@ -17,6 +17,7 @@ jobs:
   release:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false  # <--- 添加这一行
       matrix:
         include:
           - os: windows-2022
